@@ -1,0 +1,6 @@
+{
+  "app": "FrostPOS",
+  "version": "1.0.0",
+  "description": "Ice cream point of sale demo data",
+  "categories": ["Ice Cream", "Special", "Drink", "Topping"]
+}

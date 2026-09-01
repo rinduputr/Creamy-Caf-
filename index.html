@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
+  <title>FrostPOS — Ice Cream Point of Sale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><div class="brand-mark">🍦</div><div><strong>FrostPOS</strong><span>Ice Cream Store</span></div></div>
+      <nav>
+        <button class="nav-item active" data-view="pos"><span>🛒</span> Kasir</button>
+        <button class="nav-item" data-view="products"><span>🍨</span> Produk</button>
+        <button class="nav-item" data-view="transactions"><span>🧾</span> Transaksi</button>
+        <button class="nav-item" data-view="reports"><span>📊</span> Laporan</button>
+        <button class="nav-item" data-view="settings"><span>⚙️</span> Pengaturan</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="mini-info"><span class="dot"></span><div><b>Kasir aktif</b><small id="cashierLabel">Rindu</small></div></div>
+        <button class="icon-btn" id="themeBtn" title="Ganti tema">🌙</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+        <div><h1 id="pageTitle">Kasir</h1><p id="pageSubtitle">Kelola pesanan dengan cepat dan simpel.</p></div>
+        <div class="top-actions"><span class="clock" id="clock"></span><button class="avatar">R</button></div>
+      </header>
+
+      <section class="content">
+        <!-- POS -->
+        <div class="view active" id="view-pos">
+          <div class="pos-layout">
+            <div class="catalog">
+              <div class="toolbar">
+                <div class="search"><span>⌕</span><input id="productSearch" placeholder="Cari rasa atau produk..."></div>
+                <div class="chips" id="categoryChips"></div>
+              </div>
+              <div class="product-grid" id="productGrid"></div>
+            </div>
+            <aside class="cart-panel">
+              <div class="cart-head"><div><h2>Pesanan</h2><span id="cartCount">0 item</span></div><button class="text-btn" id="clearCart">Kosongkan</button></div>
+              <div class="customer-row"><input id="customerName" placeholder="Nama pelanggan (opsional)"><select id="orderType"><option>Dine In</option><option>Take Away</option></select></div>
+              <div class="cart-items" id="cartItems"><div class="empty"><div>🍧</div><b>Keranjang masih kosong</b><span>Pilih es krim untuk mulai pesanan.</span></div></div>
+              <div class="summary">
+                <div><span>Subtotal</span><b id="subtotal">Rp0</b></div>
+                <div><span>Diskon</span><b id="discount">Rp0</b></div>
+                <div class="discount-box"><input type="number" id="discountInput" min="0" max="100" value="0"><span>%</span></div>
+                <div class="total"><span>Total</span><strong id="total">Rp0</strong></div>
+                <button class="primary-btn" id="payBtn">💳 Bayar Sekarang</button>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="view" id="view-products">
+          <div class="section-head"><div><h2>Produk</h2><p>Kelola menu, harga, kategori, dan stok.</p></div><button class="primary-btn small" id="addProductBtn">＋ Tambah Produk</button></div>
+          <div class="stats-row"><div class="stat"><span>Total Produk</span><b id="productTotal">0</b></div><div class="stat"><span>Stok Menipis</span><b id="lowStock">0</b></div><div class="stat"><span>Nilai Stok</span><b id="stockValue">Rp0</b></div></div>
+          <div class="table-card"><div class="table-wrap"><table><thead><tr><th>Produk</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="productTable"></tbody></table></div></div>
+        </div>
+
+        <!-- TRANSACTIONS -->
+        <div class="view" id="view-transactions">
+          <div class="section-head"><div><h2>Transaksi</h2><p>Riwayat penjualan yang tersimpan di browser.</p></div><button class="secondary-btn" id="exportBtn">⬇ Export JSON</button></div>
+          <div class="table-card"><div class="table-wrap"><table><thead><tr><th>ID</th><th>Waktu</th><th>Pelanggan</th><th>Tipe</th><th>Item</th><th>Total</th></tr></thead><tbody id="transactionTable"></tbody></table></div></div>
+        </div>
+
+        <!-- REPORTS -->
+        <div class="view" id="view-reports">
+          <div class="section-head"><div><h2>Laporan</h2><p>Ringkasan performa penjualan FrostPOS.</p></div><button class="secondary-btn" id="resetDataBtn">↻ Data Demo</button></div>
+          <div class="stats-row report-stats"><div class="stat"><span>Omzet</span><b id="reportRevenue">Rp0</b></div><div class="stat"><span>Transaksi</span><b id="reportTransactions">0</b></div><div class="stat"><span>Item Terjual</span><b id="reportItems">0</b></div><div class="stat"><span>Rata-rata</span><b id="reportAverage">Rp0</b></div></div>
+          <div class="report-grid"><div class="table-card"><div class="card-title">Penjualan per Kategori</div><div id="categoryReport"></div></div><div class="table-card"><div class="card-title">Produk Terlaris</div><div id="bestProducts"></div></div></div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="view" id="view-settings">
+          <div class="section-head"><div><h2>Pengaturan</h2><p>Sesuaikan identitas toko dan preferensi aplikasi.</p></div></div>
+          <div class="settings-card">
+            <label>Nama Toko<input id="storeName" value="FrostPOS Ice Cream"></label>
+            <label>Nama Kasir<input id="cashierName" value="Rindu"></label>
+            <label>Mata Uang<select id="currency"><option value="IDR">Rupiah (IDR)</option></select></label>
+            <button class="primary-btn" id="saveSettings">Simpan Pengaturan</button>
+          </div>
+          <div class="tip"><b>💡 GitHub Pages ready</b><span>Aplikasi ini berjalan sepenuhnya di browser menggunakan LocalStorage. Tidak membutuhkan server atau database.</span></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal hidden" id="paymentModal"><div class="modal-box"><button class="modal-close" data-close>×</button><h2>Pembayaran</h2><p id="paymentTotalText"></p><div class="payment-methods"><button class="method active" data-method="Cash">💵 Cash</button><button class="method" data-method="QRIS">▦ QRIS</button><button class="method" data-method="Debit">💳 Debit</button></div><label>Uang diterima<input type="number" id="cashReceived" min="0" placeholder="Masukkan nominal"></label><div class="change"><span>Kembalian</span><strong id="change">Rp0</strong></div><button class="primary-btn" id="confirmPayment">✓ Konfirmasi Pembayaran</button></div></div>
+
+  <div class="modal hidden" id="productModal"><div class="modal-box"><button class="modal-close" data-close>×</button><h2 id="productModalTitle">Tambah Produk</h2><form id="productForm"><input type="hidden" id="editProductId"><label>Nama Produk<input id="formName" required></label><label>Kategori<select id="formCategory"><option>Ice Cream</option><option>Special</option><option>Drink</option><option>Topping</option></select></label><label>Harga<input type="number" id="formPrice" min="0" required></label><label>Stok<input type="number" id="formStock" min="0" required></label><label>Emoji Produk<input id="formEmoji" maxlength="3" placeholder="🍦"></label><button class="primary-btn">Simpan Produk</button></form></div></div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
