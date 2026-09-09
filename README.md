@@ -34,3 +34,7 @@ Cukup buka `index.html` di browser.
 
 ## Catatan
 Karena ini aplikasi frontend-only, data transaksi tersimpan di LocalStorage browser masing-masing perangkat. Untuk kasir multi-device/sinkronisasi online, aplikasi perlu backend/database.
+
+
+### Favicon
+Versi ini sudah dilengkapi `favicon.svg` custom dengan ikon es krim + efek frost/sparkle yang mengikuti identitas FrostPOS (biru, putih, abu-abu). Favicon otomatis dipakai oleh browser melalui `index.html`.
